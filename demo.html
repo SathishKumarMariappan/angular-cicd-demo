@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Data</title>
+    <style>
+        table {
+            width: 50%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <h2 style="text-align: center;">Student Information</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Major</th>
+                <th>GPA</th>
+            </tr>
+        </thead>
+        <tbody id="studentTableBody">
+        </tbody>
+    </table>
+
+    <script>
+        fetch('http://40.81.232.206/')
+            .then(response => response.json())
+            .then(data => {
+                const tableBody = document.getElementById('studentTableBody');
+                
+                data.forEach(student => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${student.id}</td>
+                        <td>${student.name}</td>
+                        <td>${student.age}</td>
+                        <td>${student.major}</td>
+                        <td>${student.gpa}</td>
+                    `;
+                    
+                    tableBody.appendChild(row);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching the data:', error);
+            });
+    </script>
+
+</body>
+</html>
